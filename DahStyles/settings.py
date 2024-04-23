@@ -79,22 +79,23 @@ AUTH_USER_MODEL='admin_side.Customer'
 WSGI_APPLICATION = 'DahStyles.wsgi.application'
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('db_name'),
-        'USER': config('db_user'),
-        'PASSWORD': config('db_pass'),
-        'HOST':config('host'),
-        'PORT':config('port'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': config('db_name'),
+#         'USER': config('db_user'),
+#         'PASSWORD': config('db_pass'),
+#         'HOST':config('host'),
+#         'PORT':config('port'),
+#     }
+# }
 
 
 
