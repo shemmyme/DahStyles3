@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="{% url 'home' %}"><i class="fa fa-home"></i> Home</a>
+                        <a><span>{{ products.product_name}}</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Product Details Section Begin -->
+   <form method="post" action="{% url 'add_cart' product_id=products.id %}">
+        {% csrf_token %} 
+    <section class="product-details spad">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-6">
+                    <div class="product__details__pic">
+                            <div class="xzoom-container">
+                                <img class="xzoom" width="600px" height="600px" id="xzoom-default-{{products.id}}" src="{{products.image_1.url}}" xoriginal="{{products.image_1.url}}" />
+                              </div>
+                              <div class="xzoom-thumbs">
+                                <a style="height: 600px;" href="{{products.image_1.url}}"><img class="xzoom-gallery" width="150px" height="150px" src="{{products.image_1.url}}" xpreview="{{products.image_1.url}}"></a>
+                                <a href="{{products.image_2.url}}"><img class="xzoom-gallery" width="150px" height="150px" src="{{products.image_2.url}}"></a>
+                                <a href="{{products.image_3.url}}"><img class="xzoom-gallery" width="150px" height="150px" src="{{products.image_3.url}}"></a>
+                              </div>
+                              
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="product__details__text">
+                        <h3>{{ products.product_name }}</h3>
+                        <div class="product__details__price">$ {{products.price}}</div>
+                        <div class="product__details__button">
+                            {% comment %} <div class="quantity">
+                                <span>Quantity:</span>
+                                <div class="pro-qty">
+                                    <input type="text" value="1">
+                                </div>
+                            </div> {% endcomment %}
+                            {% if products.stock <= 0 %}
+                            <h5>out of stock</h5>
+                            {% else %}
+                            {% if user.is_authenticated %}
+                            <button type="submit"  class="cart-btn"><span class="icon_bag_alt"></span> Add to cart</button>
+                            {% else %}
+                            <a href="{% url 'login' %}" class="cart-btn"><span class="icon_bag_alt"></span> Please login</a>
+                            {% endif %}
+                            {% endif %}
+
+    </form>
+                            
+                            <ul>
+                                <li><a href="{% url 'add_wishlist' products.id %}"><span class="icon_heart_alt"></span></a></li>
+                                {% comment %} <li><a href="#"><span class="icon_adjust-horiz"></span></a></li> {% endcomment %}
+                            </ul>
+                        </div>
+                        <div class="product_details_widget">
+                            <ul>
+                                <li>
+                                    <span>Available Stock:</span>
+                                    <div class="stock">
+                                        {{ products.stock }}
+                                    </div>
+                                </li>
+                                <li>
+                                    <span>Available color:</span>
+                                    <div class="form-group">
+                                      <select class="form-control" id="color-dropdown" name="color" required>
+                                        <option value="" disabled selected>Choose color</option>
+                                        {% for i in products.variation_set.colors %}
+                                        <option value="{{i.variation_value | lower}}">{{i.variation_value | capfirst}}</option>
+                                        {% endfor %}
+                                      </select>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <span>Available size:</span>
+                                    <div class="form-group">
+                                      <select class="form-control" id="size" name="size">
+                                        <option value="" disabled selected>Choose Size</option>
+    
+                                        {% for i in products.variation_set.sizes %}
+                                        <option value="{{i.variation_value | lower}}">{{i.variation_value | capfirst}}</option>
+                                        {% endfor %}
+                                      </select>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <span>Description:</span>
+                                    <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                                        <h6>{{products.description}}</h6>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <span>Promotions:</span>
+                                    <p>Free shipping</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                   
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://payalord.github.io/xZoom/js/vendor/jquery.js"></script>
+  <script type="text/javascript" src="https://payalord.github.io/xZoom/source/js/xzoom.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://payalord.github.io/xZoom/css/xzoom.css" media="all" /> 
+  <script type="text/javascript" src="https://payalord.github.io/xZoom/js/setup.js"></script>
+    <!-- Product Details Section End -->
+   
+    {% endblock %}
+ 

@@ -1,0 +1,43 @@
+{% extends 'admin_panel.html' %}
+{% load static %}
+{% block adminpack %}
+
+<div class="text-center mx-auto mt-2 w-50">
+  {% include 'includes/alerts.html' %}
+</div>
+
+<div class="container d-flex justify-content-center align-items-center mt-3" style="min-height: 33rem;">
+  <div class="col-md-6">
+    <h2 class="text-center text-white">Edit Variation</h2>
+    <form action="{% url 'edit_product_variation' variation.id %}" method="post">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label>Product</label>
+        {{ form.product }}
+      </div>
+      <div class="form-group">
+        <label>Variation Category</label>
+        {{ form.variation_category }}  
+      </div>
+      <div class="form-group">
+        <label>Value</label>
+        {{ form.variation_value }}  
+      </div>
+      <div class="form-group">
+        <label>Price Multiplier</label>
+        {{ form.price_multiplier }}
+      </div>
+      <div class="form-group">
+        <label>Is Active</label>
+        {{ form.is_active }}
+      </div>
+
+      <div class="form-group text-center">
+        <button type="submit" name="submit" id="submit" class="btn btn-warning">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

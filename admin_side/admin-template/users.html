@@ -1,0 +1,71 @@
+{% extends 'admin_panel.html' %}
+{% load static %}
+
+{% block adminpack %}
+
+<main id="main" class="main" style="padding: 30px;">
+    <div class="pagetitle">
+        <h1>All Registered Users</h1>
+    </div>
+    <div class="card shadow" style="padding: 30px;">
+        
+    <div class="card-body">
+       
+        <div class="container-fluid">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>S.No.</th>
+                        <th>User Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in page_obj %}
+                    {% if not i.is_superuser %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{i.username}}</td>
+                        <td>
+                            <form method="POST" action="{% url 'blockuser' i.id %}">
+                                {% csrf_token %}
+                                {% if i.is_active %}
+                                <button type="submit" onclick="return confirm('Are You Sure want to block this user ?')"
+                                    class="btn btn-danger">Block</button>
+                                {% else %}
+                                <button type="submit"
+                                    onclick="return confirm('Are You Sure want to unblock this user ?')"
+                                    class="btn btn-primary">Unblock</button>
+                                {% endif %}
+                            </form>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    <!-- add more rows as needed -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}">&lsaquo; previous</a>
+        {% endif %}
+
+        <span class="current-page">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">next &rsaquo;</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+</main>
+
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% comment %} <h1>Change Password</h1>
+  <body style="background-color: #f9f9f9; font-family: Arial, sans-serif;">
+    <h1 style="text-align: center; margin-top: 50px;">Change Password</h1>
+    <form method="post" style="display: flex; flex-direction: column; align-items: center; border: 1px solid #ccc; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); width: 400px; margin: 0 auto;">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" style="background-color: #4CAF50; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 18px; transition: background-color 0.3s ease-in-out;">
+        Change Password
+      </button>
+    </form>
+  </body>
+   {% endcomment %}
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Change Password</title>
+  </head>
+  <body style="font-family: Arial, sans-serif; background-color: #f9f9f9;">
+    <h1 style="text-align: center; margin: 50px 0; color: #333;">Change Password</h1>
+    <form method="post" style="margin: 0 auto; width: 400px; background-color: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);">
+      {% csrf_token %}
+      <label for="id_old_password" style="display: block; font-size: 18px; font-weight: bold; margin-bottom: 10px; color: #333;">Old Password:</label>
+      <input type="password" name="old_password" id="id_old_password" style="padding: 10px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; width: 100%; box-sizing: border-box;" required>
+      <label for="id_new_password1" style="display: block; font-size: 18px; font-weight: bold; margin-bottom: 10px; color: #333;">New Password:</label>
+      <input type="password" name="new_password1" id="id_new_password1" style="padding: 10px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; width: 100%; box-sizing: border-box;" required>
+      <label for="id_new_password2" style="display: block; font-size: 18px; font-weight: bold; margin-bottom: 10px; color: #333;">Confirm New Password:</label>
+      <input type="password" name="new_password2" id="id_new_password2" style="padding: 10px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; width: 100%; box-sizing: border-box;" required>
+      <button type="submit" style="background-color: #ca1515; border: none; color: #fff; padding: 10px 20px; border-radius: 5px; font-size: 16px; cursor: pointer; transition: background-color 0.3s ease-in-out;">Change Password</button>
+    </form>
+  </body>
+  {% for i in messages %}
+  <h4>{{ i }}</h4>
+  {% endfor %}
+</html>
+
+{% endblock %}

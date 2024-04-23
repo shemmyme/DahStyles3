@@ -1,0 +1,50 @@
+{% extends 'admin_panel.html' %}
+{% load static %}
+
+
+{% block adminpack %}
+
+
+<div class="text-center mx-auto mt-2">{% include 'includes/alerts.html' %}</div>
+
+<div class="container mt-3" style="min-height: 33rem;">
+  <h2 class="text-center text-white">Add Category</h2>
+  <form action="{% url 'addCategory' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="col form-group">
+        <label > Category Name</label><br>
+        {{form.category_name}}  
+    </div>
+    <div class="col form-group">
+        <label > Slug</label><br>
+        {{form.slug}}  
+    </div>
+
+    <div class="col form-group">
+        <label > Description</label><br>
+        {{form.description}}  
+    </div>
+    <div class="col form-group">
+        <label > Image</label><br>
+        {{form.cat_image}}
+        <div id="image-box" class="image-container"></div>
+        <button class="btn btn-outline-info" id="crop-btn" style="width: 100%; margin-top: 10px; display: none;" type="button">Crop</button>
+    </div>
+    <div class="col form-group">
+       <a href=""> <input type="submit" name="submit" id="submit" class="btn btn-warning" value="Save"/></a>
+    </div>
+  </form>
+</div>
+
+<script>
+    document.getElementById("id_category_name").onkeyup=function(){
+        document.getElementById("id_slug").value=document.getElementById("id_category_name").value.toLowerCase().replaceAll(" ","-");
+      }
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.js"></script>
+
+
+  
+{% endblock %}

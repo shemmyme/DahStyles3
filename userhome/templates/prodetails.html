@@ -1,0 +1,457 @@
+{% comment %} {% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Product Details Section Begin -->
+<form method="post" action="{% url 'add_cart' product_id=products.id %}">
+    {% csrf_token %}
+{% comment %} <section class="product-details spad">
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-lg-6">
+                <div class="product_details_pic">
+                    <div class="product_detailspicleft product_thumb nice-scroll">
+                        <a class="pt active" href="#product-1">
+                            <img src="{{products.image_1.url}}" alt="yf">
+                        </a>
+                        <a class="pt" href="#product-2">
+                            <img src="{{products.image_2.url}}" alt="">
+                        </a>
+                        <a class="pt" href="#product-3">
+                            <img src="{{products.image_3.url}}" alt="">
+                        </a>
+                            {% comment %} <a class="pt" href="#product-3">
+                                <img src="{{products.image_4.url}}" alt="">
+                            </a>
+                       
+                    </div>
+                    <div class="product_detailsslider_content">
+                        <div class="product_detailspic_slider owl-carousel">
+                            <img data-hash="product-1" class="product_big_img" src="{{products.image_1.url}}" alt="">
+                            <img data-hash="product-2" class="product_big_img" src="{{products.image_2.url}}" alt="">
+                            <img data-hash="product-3" class="product_big_img" src="{{products.image_3.url}}" alt="">
+                            {% comment %} <img data-hash="product-4" class="product_big_img" src="{{products.image_4.url}}" alt=""> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="product_details_text">
+                    <h3>{{products.product_name}}</span></h3>
+                  
+                    <div class="product_details_price">$ {{products.price}}</div>
+                   
+                    <div class="product_details_button">
+                        <div class="quantity">
+                            <span>Quantity:</span>
+                            <div class="pro-qty">
+                                <input name="quantity" type="text" value="1">
+                            </div> 
+                        </div>
+                        {% if products.stock <= 0 %}
+                        <h5>out of stock</h5>
+                        {% else %}
+                        {% if user.is_authenticated %}
+                        <button type="submit"  class="cart-btn"><span class="icon_bag_alt"></span> Add to cart</button>
+                        {% else %}
+                        <a href="{% url 'login' %}" class="cart-btn"><span class="icon_bag_alt"></span> Please login</a>
+                        {% endif %}
+                        {% endif %}
+                        <ul>
+                            <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+                            <!-- <li><a href="#"><span class="icon_adjust-horiz"></span></a></li> -->
+                        </ul>
+                    </div>
+                    <div class="product_details_widget">
+                        <ul>
+                            <li>
+                                <span>Availability:</span>
+                                <div class="stock">
+                                
+                                        Total stock: {{ total_stock }}
+
+                                        
+                                
+                                </div>
+                            </li>
+                            <li>
+                                <span>Available color:</span>
+                                <div class="form-group">
+                                  <select class="form-control" id="color-dropdown" name="color" required>
+                                    <option value="" disabled selected>Choose color</option>
+                                    {% for i in products.variation_set.colors %}
+                                    <option value="{{i.variation_value | lower}}">{{i.variation_value | capfirst}}</option>
+                                    {% endfor %}
+                                  </select>
+                                </div>
+                              </li>
+                              <li>
+                                <span>Available size:</span>
+                                <div class="form-group">
+                                  <select class="form-control" id="size" name="size">
+                                    <option value="" disabled selected>Choose Size</option>
+
+                                    {% for i in products.variation_set.sizes %}
+                                    <option value="{{i.variation_value | lower}}">{{i.variation_value | capfirst}}</option>
+                                    {% endfor %}
+                                  </select>
+                                </div>
+                              </li>
+                              
+                            <li>
+                                <span>Promotions:</span>
+                                <p>Free shipping</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="product_details_tab">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Description</a>
+                        </li>
+                     
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                            <h6>Description</h6>
+                            <p>{{products.description}}</p>
+                            
+                        </div>
+                     
+            </div>
+        
+        </div>
+    </section> 
+    </form>
+{% endblock %}
+
+
+
+
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+
+{% comment %} <br><br><br><br><br> 
+
+<div class="cart-buttons">
+  <a class="boxed-btn" style="margin-left: 200px;margin-top: 120px;">Profile</a>
+  
+</div>
+{% if user.profile_pic  %}
+<section style="background-color: #eee;">
+    <div style="background-color:white" class="container py-5">
+      
+      <div class="row">
+        <div class="col">
+          
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card mb-4">
+            <div class="card-body text-center">
+             
+              <img src="{{user.profile_pic.url}}" alt="avatar"
+                class="rounded-circle img-fluid" style="width: 150px;">
+                
+              <h5 class="my-3">{{user.username}}</h5>
+              
+              <div class=" mb-2">
+                <a href="{% url 'updateprofile' %}" type="button" class="btn btn-outline-primary ms-1">Edit</a>
+                <a href="{% url 'add_address' %}" type="button" class="btn btn-outline-primary ms-1">Add Address</a>
+                <a href="{% url 'manageaddress' %}" type="button" class="btn btn-outline-primary ms-1">Manage Address</a>
+
+              </div>
+            </div>
+          </div>
+          <div class="card mb-4 mb-lg-0">
+            <div class="card-body p-0">
+             
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Name</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{user.first_name}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Username</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{user.username}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Email</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{user.email}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Mobile</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{user.phone}}</p>
+                </div>
+              </div>
+              <hr>
+              
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Address</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{user.address}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% comment %} <div class="row">
+            <div class="col-md-6">
+              <div class="card mb-4 mb-md-0">
+                <div class="card-body">
+                  <p class="mb-4"><span class="text-primary font-italic me-1">assigment</span> Project Status
+                  </p>
+                  <p class="mb-1" style="font-size: .77rem;">Web Design</p>
+                  <div class="progress rounded" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <p class="mt-4 mb-1" style="font-size: .77rem;">Website Markup</p>
+                  <div class="progress rounded" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: 72%" aria-valuenow="72"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <p class="mt-4 mb-1" style="font-size: .77rem;">One Page</p>
+                  <div class="progress rounded" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: 89%" aria-valuenow="89"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <p class="mt-4 mb-1" style="font-size: .77rem;">Mobile Template</p>
+                  <div class="progress rounded" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: 55%" aria-valuenow="55"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <p class="mt-4 mb-1" style="font-size: .77rem;">Backend API</p>
+                  <div class="progress rounded mb-2" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: 66%" aria-valuenow="66"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card mb-4 mb-md-0">
+                <div class="card-body">
+                  <p class="mb-4"><span class="text-primary font-italic me-1">assigment</span> Project Status
+                  </p>
+                  <p class="mb-1" style="font-size: .77rem;">Web Design</p>
+                  <div class="progress rounded" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <p class="mt-4 mb-1" style="font-size: .77rem;">Website Markup</p>
+                  <div class="progress rounded" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: 72%" aria-valuenow="72"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <p class="mt-4 mb-1" style="font-size: .77rem;">One Page</p>
+                  <div class="progress rounded" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: 89%" aria-valuenow="89"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <p class="mt-4 mb-1" style="font-size: .77rem;">Mobile Template</p>
+                  <div class="progress rounded" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: 55%" aria-valuenow="55"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <p class="mt-4 mb-1" style="font-size: .77rem;">Backend API</p>
+                  <div class="progress rounded mb-2" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: 66%" aria-valuenow="66"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% else %}
+  <section style="background-color: #eee;">
+    <div style="background-color:white" class="container py-5">
+      <div class="row">
+        <div class="col">
+          
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card mb-4">
+            <div class="card-body text-center">
+             
+              <img src="https://th.bing.com/th/id/OIP.e1KNYwnuhNwNj7_-98yTRwHaF7?w=231&h=185&c=7&r=0&o=5&dpr=1.5&pid=1.7" alt="avatar"
+                class="rounded-circle img-fluid" style="width: 150px;">
+                
+              <h5 class="my-3">{{user.username}}</h5>
+              
+              <div class=" mb-2">
+                <a href="{% url 'updateprofile' %}" type="button" class="btn btn-outline-primary ms-1">Edit</a>
+                <a href="{% url 'add_address' %}" type="button" class="btn btn-outline-primary ms-1">Add Address</a>
+                <a href="{% url 'manageaddress' %}" type="button" class="btn btn-outline-primary ms-1">Manage Address</a>
+
+              </div>
+            </div>
+          </div>
+          <div class="card mb-4 mb-lg-0">
+            <div class="card-body p-0">
+             
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Name</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{user.first_name}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Username</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{user.username}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Email</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{user.email}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Mobile</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{user.phone}}</p>
+                </div>
+              </div>
+              <hr>
+              
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Address</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{user.address}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% comment %} <div class="row">
+            <div class="col-md-6">
+              <div class="card mb-4 mb-md-0">
+                <div class="card-body">
+                  <p class="mb-4"><span class="text-primary font-italic me-1">assigment</span> Project Status
+                  </p>
+                  <p class="mb-1" style="font-size: .77rem;">Web Design</p>
+                  <div class="progress rounded" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <p class="mt-4 mb-1" style="font-size: .77rem;">Website Markup</p>
+                  <div class="progress rounded" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: 72%" aria-valuenow="72"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <p class="mt-4 mb-1" style="font-size: .77rem;">One Page</p>
+                  <div class="progress rounded" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: 89%" aria-valuenow="89"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <p class="mt-4 mb-1" style="font-size: .77rem;">Mobile Template</p>
+                  <div class="progress rounded" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: 55%" aria-valuenow="55"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <p class="mt-4 mb-1" style="font-size: .77rem;">Backend API</p>
+                  <div class="progress rounded mb-2" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: 66%" aria-valuenow="66"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card mb-4 mb-md-0">
+                <div class="card-body">
+                  <p class="mb-4"><span class="text-primary font-italic me-1">assigment</span> Project Status
+                  </p>
+                  <p class="mb-1" style="font-size: .77rem;">Web Design</p>
+                  <div class="progress rounded" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <p class="mt-4 mb-1" style="font-size: .77rem;">Website Markup</p>
+                  <div class="progress rounded" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: 72%" aria-valuenow="72"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <p class="mt-4 mb-1" style="font-size: .77rem;">One Page</p>
+                  <div class="progress rounded" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: 89%" aria-valuenow="89"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <p class="mt-4 mb-1" style="font-size: .77rem;">Mobile Template</p>
+                  <div class="progress rounded" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: 55%" aria-valuenow="55"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <p class="mt-4 mb-1" style="font-size: .77rem;">Backend API</p>
+                  <div class="progress rounded mb-2" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: 66%" aria-valuenow="66"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div> 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+{% endblock  %}  {% endcomment %}

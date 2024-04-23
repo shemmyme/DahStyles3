@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a href="{% url 'home' %}"><i class="fa fa-home"></i> Home</a>
+                    <span>Wishlist</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Wishlist Section Begin -->
+<section class="shop-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shop__cart__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Price</th>
+                                {% comment %} <th>Cart</th> {% endcomment %}
+                                <th>Remove</th>
+                                
+                                {% comment %} <th>Move</th> {% endcomment %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in wishlist_items %}
+                            <tr>
+                                <td class="cart_product_item">
+                                    <a href="{{ i.product.get_url }}"><img style="width: 10%;" src="{{i.product.image_1.url}}" alt=""></a>
+                                        <h6>{{i.product.product_name}}</h6>
+                                   {% comment %}  <div class="cart_productitem_title">
+                                        {% if i.variations.all %}
+                                        <ul>
+                                        {% for variation in i.variations.all %}
+                                            <li>{{ variation.variation_category }}: {{ variation.variation_value }}</li>
+                                        {% endfor %}
+                                        </ul>
+                                    {% endif %} {% endcomment %}
+                                        
+                                    </div>
+                                </td>
+                                <td class="cart__price">$ {{i.product.price}}</td>
+                                <td class="cart__close"><a href="{% url 'remove_from_wishlist' item_id=i.id %} "> <span class="icon_close"></span></a></td> 
+
+
+                                
+                                {% comment %} <td><a href="{% url 'add_cart' product_id=product.id %}">Add to cart</a>
+                                    <span class="icon_heart_alt"></span></a></td> {% endcomment %}
+
+
+
+                                
+                            </tr>
+                            {% empty %}
+                                <tr><td colspan="4">Your wishlist is empty.</td></tr>
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="cart__btn">
+                    <a href="{% url 'shop' %}">Continue Shopping</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Wishlist Section End -->
+
+{% endblock %}

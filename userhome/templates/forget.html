@@ -1,0 +1,72 @@
+
+
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<!--================Login Box Area =================-->
+<section class="login_box_area section_gap" style="height: 60vh;">
+    <div class="container">
+        <section class="login_box_area section_gap" style="height: 60vh; display: flex; justify-content: center; align-items: center;">
+        <div class="col-lg-6">
+          <div class="login_form_inner">
+            <h3>Forgot Password</h3>
+            <form class="row login_form" id="form" action="{% url 'forgetpassword'%}" method="post" novalidate="novalidate">
+              {% csrf_token %}
+              {% comment %} {%include 'includes/alert.html'%} {% endcomment %}
+              <div class="col-md-12 form-group">
+                <input ree type="email" class="form-control" id="email" name="email" placeholder="Enter your email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your email'" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" >
+              </div>
+              
+              <div class="col-md-12 form-group">
+                <button type="submit" value="submit" class="primary-btn">SUBMIT</button>
+              </div>
+              {% for message in messages %}
+              <div class="alert alert-danger" role="alert">
+                {{message}}
+              </div>
+              {% endfor %}
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--================End Login Box Area =================-->
+  <script>
+    const form = document.getElementById("form");
+    const emailInput = document.getElementById("email");
+    const submitButton = document.querySelector("button[type=submit]");
+  
+    form.addEventListener("submit", (event) => {
+      event.preventDefault(); // Prevent the form from submitting
+  
+      // Validate the email input field
+      const emailValue = emailInput.value.trim();
+      const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
+      if (!emailRegex.test(emailValue)) {
+        emailInput.classList.add("is-invalid");
+        alert("Please enter a valid email address.");
+        emailInput.focus();
+        return;
+      }
+  
+      // Submit the form if validation passed
+      form.submit();
+    });
+  
+    emailInput.addEventListener("input", () => {
+      // Remove the "is-invalid" class when the user starts typing again
+      emailInput.classList.remove("is-invalid");
+    });
+  
+    submitButton.addEventListener("click", () => {
+      // Trigger the form submit event
+      form.dispatchEvent(new Event("submit"));
+    });
+  </script>
+  
+
+{% endblock  %}

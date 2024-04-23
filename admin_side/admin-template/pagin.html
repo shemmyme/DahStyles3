@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% for item in my_data %}
+<h2>{{ item.product_name }}</h2>
+{% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if my_data.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ my_data.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current-page">
+            Page {{ my_data.number }} of {{ my_data.paginator.num_pages }}.
+        </span>
+
+        {% if my_data.has_next %}
+            <a href="?page={{ my_data.next_page_number }}">next</a>
+            <a href="?page={{ my_data.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>

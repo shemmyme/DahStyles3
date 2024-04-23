@@ -1,0 +1,96 @@
+{% extends 'admin_panel.html' %}
+{% load static %}
+
+{% block adminpack %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+                
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'addbrand' %}">Add Brand</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'addcategory' %}">Add Category</a>
+        </li>
+        <li><div class="row">
+          <div style="display: flex; justify-content: center; align-items: center;">
+            <div style="width: 50%;">
+              <form action="{% url 'catsearch' %}" method="GET" class="form-inline">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Search..." name="keyword" style="width: 80%;">
+                  <div class="input-group-append">
+                  </div>
+                  
+                </div>
+                
+              </form>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg" style="background-color: #007bff; border-color: #007bff;"><span class="icon_search"></span></button>
+  
+          </div>
+          
+          </div>
+        </li>  
+      </ul>
+    </div>
+  </nav>
+
+<table class="table table-hover ">
+    <thead>
+      <tr>
+        <th scope="col">S.No</th>
+        <th scope="col">Category Name</th>
+        <th scope="col">Image</th>
+        <!-- <th scope="col">Option</th> -->
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for i in catt %}
+      <tr>
+        
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{i.category_name}}</td>
+      <td> <img src="{{i.cat_image.url}}" style="width: 90px ; height: 110px;" alt=""></td>
+        <!-- <td><a href="{% url 'adminproductedit' i.id %}"><button style="background-color: yellowgreen;border-color: yellowgreen;">Edit</button></a></td> -->
+        <td><a href="{% url 'deletecat' i.id%}" 
+          onclick="return confirm('Are You Sure?')"><button style= "background-color: red;border-color: yellowgreen;" >Delete</button></a></td>
+
+      
+      
+      </tr>
+      
+      {%endfor%}
+    </tbody>
+  </table>
+  
+  <div style="display: flex; justify-content: center;">
+    {% if catt.has_other_pages%}
+    <ul style="list-style: none; display: flex; justify-content: center; align-items: center;">
+        {% if catt.has_previous %}
+        <li style="margin-right: 10px;"><a href="?page={{catt.previous_page_number}}" style="color: blue; text-decoration: none; border: 1px solid gray; padding: 5px;">Previous</a></li>
+        {% else %}
+        <li style="margin-right: 10px;" class="disabled" ><a href="#" style="color: blue; text-decoration: none; border: 1px solid gray; padding: 5px;">Previous</a></li>
+        {% endif  %}
+        {% for i in catt.paginator.page_range%}
+        {%if catt.number == i %}
+        <li style="margin-right: 10px;"><a href="#" style="color: white; background-color: blue; text-decoration: none; border: 1px solid gray; padding: 5px;">{{i}}</a></li>
+        {%else%}
+        <li style="margin-right: 10px;"><a href="?page={{i}}" style="color: blue; text-decoration: none; border: 1px solid gray; padding: 5px;">{{i}}</a></li>
+        {% endif %}
+        {% endfor %}
+        {% if catt.has_next %}
+        <li style="margin-right: 10px;"><a href="?page={{catt.next_page_number}}" style="color: blue; text-decoration: none; border: 1px solid gray; padding: 5px;">Next</a></li>
+        {% else %}
+        <li style="margin-right: 10px;" class="disabled"><a href="#" style="color: blue; text-decoration: none; border: 1px solid gray; padding: 5px;">Next</a></li>
+        {% endif %}
+    
+    </ul>
+    {% endif %}
+  
+
+{% endblock  %}

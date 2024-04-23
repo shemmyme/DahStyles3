@@ -1,0 +1,212 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+   
+    <!-- Banner Section Begin -->
+<section class="banner set-bg" data-setbg="img/banner/banner-1.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-7 col-lg-8 m-auto">
+                <div class="banner__slider owl-carousel">
+                    <div class="banner__item">
+                        <div class="banner__text">
+                            <span>For the super Coooooool</span>
+                            <h1>The Hottiiiiieeeeeees</h1>
+                            <a href="{% url 'shop' %}">Shop now</a>
+                        </div>
+                    </div>
+                    <div class="banner__item">
+                        <div class="banner__text">
+                            <span>The Chloe Collection</span>
+                            <h1>The Project Jacket</h1>
+                            <a href="{% url 'shop' %}">Shop now</a>
+                        </div>
+                    </div>
+                    <div class="banner__item">
+                        <div class="banner__text">
+                            <span>The Tee Side</span>
+                            <h1>Perfect For ANY</h1>
+                            <a href="{% url 'shop' %}">Shop now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Product Section Begin -->
+<section class="product spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-4">
+                <div class="section-title">
+                    <h4>New product</h4>
+                </div>
+            </div>
+        </div>
+       
+        <div class="row property__gallery">
+            {% for i in product %}
+            <div class="col-lg-3 col-md-4 col-sm-6 mix women">
+                <div class="product__item">
+                    <div class="product__item__pic set-bg" data-setbg="{{i.image_1.url}}">
+                        <ul class="product__hover">
+                            <li><a href="{{i.image_1.url}}" class="image-popup"><span class="arrow_expand"></span></a></li>
+                            <li><a href="{% url 'add_wishlist' i.id %}"><span class="icon_heart_alt"></span></a></li>
+                            {% comment %} <li><a href="{% url 'add_cart' j.category %}"><span class="icon_bag_alt"></span></a></li> {% endcomment %}
+                        </ul>
+                    </div>
+                    <div class="product__item__text">
+                        <h6><a href="{% url 'product_details' i.category.slug i.slug %}">{{i.product_name}}</a></h6>
+                      
+                        <div class="product__price">${{i.price}} </div>
+                    </div>
+                </div>
+                
+            </div>
+            {% endfor %}
+           
+</section>
+<!-- Product Section End -->
+
+
+
+{% comment %} <!-- Trend Section Begin -->
+<section class="trend spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="trend__content">
+                    <div class="section-title">
+                        <h4>Hot Trend</h4>
+                    </div>
+                    <div class="trend__item">
+                        <div class="trend__item__pic">
+                            <img src="{% static 'img/trend/new.jpg' %}" alt="">
+                        </div>
+                        <div class="trend__item__text">
+                            <h6>Green Overshirt</h6>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product__price">$ 59.0</div>
+                        </div>
+                    </div>
+                  
+                    <div class="trend__item">
+                        <div class="trend__item__pic">
+                            <img src="{% static 'img/trend/ht-3.jpg' %}" alt="">
+                        </div>
+                        <div class="trend__item__text">
+                            <h6>Cotton T-Shirt</h6>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product__price">$ 59.0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="trend__content">
+                    <div class="section-title">
+                        <h4>Best seller</h4>
+                    </div>
+                    <div class="trend__item">
+                        <div class="trend__item__pic">
+                            <img src="{% static 'img/trend/bs-1.jpg' %}" alt="">
+                        </div>
+                        <div class="trend__item__text">
+                            <h6>Cotton T-Shirt</h6>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product__price">$ 59.0</div>
+                        </div>
+                    </div>
+                    <div class="trend__item">
+                        <div class="trend__item__pic">
+                            <img src="{% static 'img/trend/jean.jpg' %}" alt="">
+                        </div>
+                        <div class="trend__item__text">
+                            <h6>Splashed Jeans <br />briefcase</h6>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product__price">$ 59.0</div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="trend__content">
+                    <div class="section-title">
+                        <h4>Feature</h4>
+                    </div>
+                    <div class="trend__item">
+                        <div class="trend__item__pic">
+                            <img src="{% static 'img/trend/f-1.jpg' %}" alt="">
+                        </div>
+                        <div class="trend__item__text">
+                            <h6>Bow wrap skirt</h6>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product__price">$ 59.0</div>
+                        </div>
+                    </div>
+                    <div class="trend__item">
+                        <div class="trend__item__pic">
+                            <img src="{% static 'img/trend/metallic.jpg' %}" alt="">
+                        </div>
+                        <div class="trend__item__text">
+                            <h6>Metallic Shirt</h6>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product__price">$ 59.0</div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</section> {% endcomment %}
+
+
+
+
+
+<!-- Search End -->
+
+
+{% endblock  %}
