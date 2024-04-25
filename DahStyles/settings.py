@@ -35,6 +35,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -65,18 +66,24 @@ TEMPLATES = [
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATICFILES_DIRS = [
    os.path.join(BASE_DIR, 'admin_side/static/'),
    os.path.join(BASE_DIR, 'products_user/static/'),
 ]
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
 MEDIA_ROOT = BASE_DIR / 'uploads'
 MEDIA_URL = 'media/'
 
 
 AUTH_USER_MODEL='admin_side.Customer'
 WSGI_APPLICATION = 'DahStyles.wsgi.application'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 
 
 DATABASES = {
