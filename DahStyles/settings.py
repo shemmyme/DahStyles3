@@ -95,15 +95,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('db_name'),
-        'USER': config('db_user'),
-        'PASSWORD': config('db_pass'),
-        'HOST':config('host'),
-        'PORT':config('port'),
+        'ENGINE':'django.db.backends.postgresql',
+        'NAME': config('Database'),
+        'USER': config('User_name'),
+        'PASSWORD':config('Password'),
+        'HOST':config('Hostname'), 
+        'PORT':config('Port'),
     }
 }
-
 
 
 # Password validation
