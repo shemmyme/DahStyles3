@@ -1,7 +1,6 @@
 import os
 from pathlib import Path
 from decouple import config
-import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -94,20 +93,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': config('db_name'),
-#         'USER': config('db_user'),
-#         'PASSWORD': config('db_pass'),
-#         'HOST':config('host'),
-#         'PORT':config('port'),
-#     }
-# }
-
-database_url = os.environ.get("DATABASE_url")
-DATABASES['default']= dj_database_url.parse(database_url)
-
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('db_name'),
+        'USER': config('db_user'),
+        'PASSWORD': config('db_pass'),
+        'HOST':config('host'),
+        'PORT':config('port'),
+    }
+}
 
 
 
