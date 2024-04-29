@@ -94,16 +94,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('db_name'),
-        'USER': config('db_user'),
-        'PASSWORD': config('db_pass'),
-        'HOST':config('host'),
-        'PORT':config('port'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': config('db_name'),
+#         'USER': config('db_user'),
+#         'PASSWORD': config('db_pass'),
+#         'HOST':config('host'),
+#         'PORT':config('port'),
+#     }
+# }
 
 database_url = os.environ.get("DATABASE_url")
 DATABASES['default']= dj_database_url.parse(database_url)
