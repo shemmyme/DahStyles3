@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from decouple import config
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -103,6 +104,10 @@ DATABASES = {
         'PORT':config('port'),
     }
 }
+
+database_url = os.environ.get("DATABASE_url")
+DATABASES['default']= dj_database_url.parse(database_url)
+
 
 
 
